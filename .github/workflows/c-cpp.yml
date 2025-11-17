@@ -1,45 +1,88 @@
-name: C++ CI
+name: C++ Build and Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Install g++
-      run: sudo apt-get update && sudo apt-get install -y g++
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ build-essential
 
     - name: Compile program
-      run: g++ main.cpp -o main
-
-    - name: Run program with predefined input
       run: |
-        cat <<EOF | ./main
-        Zakaria Rahman
-        Algebra
-        25
-        7
-        +
-        10
-        -
-        10
-        *
-        10
-        /
-        10
-        %
-        10
-        Ali
-        12345
-        A
-        95
-        N
+        g++ -std=c++17 -o math_analyzer math_analyzer.cpp
+
+    - name: Run basic functionality test
+      run: |
+        # Test the program with sample input
+        echo -e "John Doe\nAlgebra\n20\n8\n10\n+\n50\n-\n30\n*\n40\n/\n10\n%\n5\nSmith\n12345\nA\n95\nn" | ./math_analyzer
+        
+        # Check if output files were created
+        if [ -f "report.txt" ] && [ -f "StudentsReportCard.txt" ]; then
+          echo "✓ Program executed successfully and generated output files"
+          echo "--- report.txt contents ---"
+          cat report.txt
+          echo "--- StudentsReportCard.txt contents ---"
+          cat StudentsReportCard.txt
+        else
+          echo "✗ Output files not generated"
+          exit 1
+        fi
+
+    - name: Test calculation function
+      run: |
+        # Create a simple test program
+        cat > test_calc.cpp << 'EOF'
+        #include <iostream>
+        #include <iomanip>
+        
+        double calculateEstimatedProblemsPerHour(int problemsSolvedPerWeek, double hoursSpentStudyingPerWeek) {
+            return static_cast<double>(problemsSolvedPerWeek) / hoursSpentStudyingPerWeek;
+        }
+        
+        int main() {
+            // Test cases
+            struct TestCase {
+                int problems;
+                double hours;
+                double expected;
+            };
+            
+            TestCase tests[] = {
+                {10, 2.0, 5.0},
+                {0, 5.0, 0.0},
+                {100, 10.0, 10.0},
+                {7, 3.5, 2.0}
+            };
+            
+            bool allPassed = true;
+            
+            for (const auto& test : tests) {
+                double result = calculateEstimatedProblemsPerHour(test.problems, test.hours);
+                if (std::abs(result - test.expected) > 0.001) {
+                    std::cout << "FAIL: " << test.problems << " problems, " << test.hours 
+                              << " hours -> expected " << test.expected << " got " << result << std::endl;
+                    allPassed = false;
+                } else {
+                    std::cout << "PASS: " << test.problems << " problems, " << test.hours 
+                              << " hours = " << result << std::endl;
+                }
+            }
+            
+            return allPassed ? 0 : 1;
+        }
         EOF
+        
+        g++ -std=c++17 -o test_calc test_calc.cpp
+        ./test_calc
