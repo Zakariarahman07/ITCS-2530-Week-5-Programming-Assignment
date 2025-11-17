@@ -6,6 +6,8 @@
 *.lo
 *.o
 *.obj
+# Ignore VS Code
+*.vscode
 
 # Precompiled Headers
 *.gch
