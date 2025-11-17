@@ -23,23 +23,24 @@ jobs:
     - name: Run program with predefined input
       run: |
         cat <<EOF | ./main
-        Zakaria Rahman
-        Algebra
-        25
-        7
-        +
-        10
-        -
-        10
-        *
-        10
-        /
-        10
-        %
-        10
-        Ali
-        12345
-        A
-        95
-        N
-        EOF
+Zakaria Rahman
+Algebra
+25
+7
+10
++
+10
+-
+10
+*
+10
+/
+10
+%
+10
+Ali
+12345
+A
+95
+N
+EOF
