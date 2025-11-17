@@ -1,0 +1,5 @@
+Name:                                                   Zakaria Rahman
+Favorite Math Subject:                                  Linear Algebra
+Confidence Level:                                                    8
+# of Hours Studying Math:                                         7.00
+Estimated Problems Solved Per Hour:                               2.86
