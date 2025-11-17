@@ -22,7 +22,7 @@ jobs:
 
       - name: Run program with predefined input
         run: |
-          cat <<EOF | ./main --test
+cat <<EOF | ./main --test
 Zakaria Rahman
 Algebra
 25
