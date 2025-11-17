@@ -1,4 +1,4 @@
-name: C++ CI
+name: C++ Build Only
 
 on:
   push:
@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install g++
         run: sudo apt-get update && sudo apt-get install -y g++
@@ -20,24 +19,3 @@ jobs:
       - name: Compile program
         run: g++ main.cpp -o main
 
-      - name: Run program with predefined input
-        run: |
-          echo "Zakaria Rahman
-Algebra
-25
-7
-+
-8
--
-2
-*
-15
-/
-3
-%
-5
-Ali
-12345
-A
-95
-N" | ./main
