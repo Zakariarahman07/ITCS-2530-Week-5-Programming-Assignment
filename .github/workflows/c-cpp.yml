@@ -22,8 +22,7 @@ jobs:
 
       - name: Run program with predefined input
         run: |
-          ./main --test <<INPUT
-Zakaria Rahman
+          echo "Zakaria Rahman
 Algebra
 25
 7
@@ -41,5 +40,4 @@ Ali
 12345
 A
 95
-N
-INPUT
+N" | ./main
