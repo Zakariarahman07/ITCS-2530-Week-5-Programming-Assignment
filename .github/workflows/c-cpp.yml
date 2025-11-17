@@ -1,0 +1,45 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install g++
+      run: sudo apt-get update && sudo apt-get install -y g++
+
+    - name: Compile program
+      run: g++ main.cpp -o main
+
+    - name: Run program with predefined input
+      run: |
+        cat <<EOF | ./main
+        Zakaria Rahman
+        Algebra
+        25
+        7
+        +
+        10
+        -
+        10
+        *
+        10
+        /
+        10
+        %
+        10
+        Ali
+        12345
+        A
+        95
+        N
+        EOF
