@@ -21,7 +21,7 @@ jobs:
 
     - name: Compile program
       run: |
-        g++ -std=c++17 -o math_analyzer math_analyzer.cpp
+        g++ -std=c++17 -o main.cpp
 
     - name: Run basic functionality test
       run: |
